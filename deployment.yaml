@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: client
+      tier: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: client
+        tier: frontend
+    spec:
+      containers:
+      - name: client
+        image: gcr.io/cloudpark-e6cc4/client-deployment:1.0.1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: client
+    tier: frontend
+spec:
+  type: LoadBalancer
+
+  ports:
+  - port: 80
+  selector:
+    app: client
+    tier: frontend
