@@ -1,13 +1,21 @@
-### STAGE 1: Build ###
 FROM node:alpine as build
-WORKDIR /app
-COPY package.json .
+
+WORKDIR /client
+
+COPY package.json ./
+
 RUN npm install
-COPY . .
+
+COPY ./public ./public
+
+COPY ./src ./src
+
+ENV REACT_APP_baseAPIURL=http://34.73.8.196:5000
+
 RUN npm run build
 
-### STAGE 2: Production Environment ###
-FROM nginx
-COPY --from=build /app/build /usr/share/nginx/html
+FROM nginx:latest
+
+COPY --from=build /client/build/ /usr/share/nginx/html
+
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
