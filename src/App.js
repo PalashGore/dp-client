@@ -9,9 +9,12 @@ const axiosInstance = axios.create({
 
 
 const sendReq = async () =>  {
-  console.log(`This is sendReq`);
-  const result = await axiosInstance.get('/response');
-  console.log(result);
+  console.log(`API URL: ${process.env.API_URL}`);
+  const url = `${process.env.API_URL}/response`;
+  const result1 = await axios.get(url);
+  console.log(`Result 1: ${result1}`);
+  const result2 = await axiosInstance.get('/response');
+  console.log(`REsult 2: ${result2}`);
 }
 
 
