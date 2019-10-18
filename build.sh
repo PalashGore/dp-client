@@ -10,3 +10,4 @@ fi
 echo "Building docker image with tag :$VERSION"
 cd C:/projects/deployment/client-deployment
 docker build -t client-image:$VERSION .
+gcloud docker -- push gcr.io/cloudpark-e6cc4/client-image:$VERSION
