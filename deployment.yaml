@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: gcr.io/cloudpark-e6cc4/client-deployment:1.0.1
+        image: gcr.io/cloudpark-e6cc4/dp-client:v1
         resources:
           requests:
             cpu: 100m
