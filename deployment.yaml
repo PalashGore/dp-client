@@ -1,41 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: dp-client-deploy-v2
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: client
+      app: dp-client
       tier: frontend
-  replicas: 1
   template:
     metadata:
       labels:
-        app: client
+        app: dp-client
         tier: frontend
     spec:
       containers:
-      - name: client
-        image: gcr.io/cloudpark-e6cc4/dp-client:v1
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        ports:
-        - containerPort: 80
+      - name: container1
+        image: gcr.io/cloudpark-e6cc4/dp-client:v2
+        imagePullPolicy: IfNotPresent
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: dp-client-service-v2
   labels:
-    app: client
+    app: dp-client
     tier: frontend
 spec:
-  type: LoadBalancer
-
+  selector:
+    app: dp-client
+    tier: frontend
   ports:
   - port: 80
-  selector:
-    app: client
-    tier: frontend
+    targetPort: 80
+  type: LoadBalancer
